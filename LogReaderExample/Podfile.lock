@@ -1,0 +1,16 @@
+PODS:
+  - LogReader (0.1.0)
+
+DEPENDENCIES:
+  - LogReader (from `../`)
+
+EXTERNAL SOURCES:
+  LogReader:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  LogReader: 397e21aee7a1bf182e14ec93128554ebde7cabed
+
+PODFILE CHECKSUM: 0bdbbc15fd0faa3dff36c4eb468e9fd52e995344
+
+COCOAPODS: 1.5.3

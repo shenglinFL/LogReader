@@ -86,6 +86,7 @@ class LoggerCrash: LogGenerator {
     }
     
     static func addCrash(name: String, reason: String?) {
+        // TODO: 添加到日志
 //        let newCrash = LogCrash(name: name, reason: reason)
 //        let store = StoreManager<LogCrash>(store: .crash)
 //        store.add(log: newCrash)

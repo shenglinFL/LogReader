@@ -7,12 +7,22 @@
 //
 
 import UIKit
-
+import LogReader
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        let btn = UIButton(type: .system)
+        btn.frame = CGRect(x: 100, y: 400, width: 100, height: 50)
+        btn.setTitle("click", for: .normal)
+        btn.addTarget(self, action: #selector(click), for: .touchUpInside)
+        self.view.addSubview(btn)
+    }
+    
+    @objc private func click() {
+        LoggerWindow.share.disable()
     }
 
     override func didReceiveMemoryWarning() {

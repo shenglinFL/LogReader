@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        self.view.backgroundColor = .white
         
         let btn = UIButton(type: .system)
         btn.frame = CGRect(x: 100, y: 400, width: 100, height: 50)
@@ -22,7 +23,9 @@ class ViewController: UIViewController {
     }
     
     @objc private func click() {
-        LoggerWindow.share.disable()
+//        LogReader.share.disable()
+        let vc = UIViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 
     override func didReceiveMemoryWarning() {

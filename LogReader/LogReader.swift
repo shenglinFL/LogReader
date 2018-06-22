@@ -6,6 +6,34 @@
 //
 
 import UIKit
+import CocoaLumberjack
+
+
+struct LogReaderOption : OptionSet {
+    
+    let rawValue: Int
+    
+    static let none = LogReaderOption(rawValue: 0)
+    
+    static let viewControllerTransition = LogReaderOption(rawValue: 1)
+    
+//    public var rawValue: UInt
+//    
+    
+//    public init(rawValue: UInt)
+    
+//    public static var touchDown: UIControlEvents { get } // on all touch downs
+//
+//    public static var touchDownRepeat: UIControlEvents { get } // on multiple touchdowns (tap count > 1)
+//
+//    public static var touchDragInside: UIControlEvents { get }
+//
+//    public static var touchDragOutside: UIControlEvents { get }
+//
+//    public static var touchDragEnter: UIControlEvents { get }
+//
+//    public static var touchDragExit: UIControlEvents { get }
+}
 
 public class LogReader: NSObject {
     
@@ -15,11 +43,13 @@ public class LogReader: NSObject {
     
     public static let share = LogReader()
     
-    var logText: String = ""
+    var filePath: String?
     
     public func enable() {
         self.window.rootViewController = self.controller
         self.window.makeKeyAndVisible()
+        
+        UIViewController.viewDidAppearHackSwizzle()
     }
     
     public func disable() {
@@ -29,8 +59,36 @@ public class LogReader: NSObject {
     }
     
     public func set(filePath: String) {
-        if let logs = NSArray(contentsOfFile: filePath) {
-            self.logText = logs.componentsJoined(by: "\n")
+        self.filePath = filePath
+
+    }
+    
+    
+}
+
+extension UIViewController {
+    
+    @objc class func viewDidAppearHackSwizzle() {
+        if let viewDidAppearHandle = class_getInstanceMethod(self, #selector(UIViewController.viewDidAppear(_:))),
+            let hackHandle = class_getInstanceMethod(self, #selector(self.viewDidAppearHackHandle)) {
+            
+            method_exchangeImplementations(viewDidAppearHandle, hackHandle)
         }
+        
+    }
+    
+    @objc func viewDidAppearHackHandle() {
+        defer {
+            viewDidAppearHackHandle()
+        }
+        if let nav = self.navigationController {
+            var path = ""
+            for vc in nav.viewControllers {
+                let title: String = vc.title != nil ? vc.title! : "UNKNOWN"
+                path = path + "/" + title
+            }
+            DDLogInfo(path)
+        }
+        
     }
 }

@@ -20,7 +20,13 @@ import UIKit
     }
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        
+        if let vc = self.rootViewController {
+            for view in vc.view.subviews {
+                if view.frame.contains(point) {
+                    return true
+                }
+            }
+        }
         return false
     }
     

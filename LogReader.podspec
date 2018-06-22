@@ -19,10 +19,12 @@ Pod::Spec.new do |s|
     s.author       = { "linsheng" => "linsheng77777@163.com" }
     s.platform     = :ios, "9.0"
     s.source       = {:git => "https://github.com/shenglinFL/LogReader.git", :tag => "#{s.version}" }
-    s.source_files = "LogReader/*.*"
+    s.source_files = "LogReader/**/*.*"
     s.requires_arc = true
     #s.frameworks   = "UIKit"
 
     s.swift_version = '4.0'
+    
+    s.dependency "CocoaLumberjack/Swift" 
 
 end

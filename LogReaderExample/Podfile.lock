@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LogReader: 397e21aee7a1bf182e14ec93128554ebde7cabed
+  LogReader: d1d8797e0a49dc62d5890ae3725f26ad4ebe55d1
 
 PODFILE CHECKSUM: 0bdbbc15fd0faa3dff36c4eb468e9fd52e995344
 

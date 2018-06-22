@@ -7,6 +7,8 @@
 
 import UIKit
  class LoggerWindow: UIWindow {
+    
+    var isShowAllWindow: Bool = false
 
     init() {
         super.init(frame: UIScreen.main.bounds)
@@ -20,6 +22,9 @@ import UIKit
     }
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        if LogReader.share.isShowAllWindow {
+            return true
+        }
         if let vc = self.rootViewController {
             for view in vc.view.subviews {
                 if view.frame.contains(point) {

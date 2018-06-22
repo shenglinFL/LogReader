@@ -17,22 +17,6 @@ struct LogReaderOption : OptionSet {
     
     static let viewControllerTransition = LogReaderOption(rawValue: 1)
     
-//    public var rawValue: UInt
-//    
-    
-//    public init(rawValue: UInt)
-    
-//    public static var touchDown: UIControlEvents { get } // on all touch downs
-//
-//    public static var touchDownRepeat: UIControlEvents { get } // on multiple touchdowns (tap count > 1)
-//
-//    public static var touchDragInside: UIControlEvents { get }
-//
-//    public static var touchDragOutside: UIControlEvents { get }
-//
-//    public static var touchDragEnter: UIControlEvents { get }
-//
-//    public static var touchDragExit: UIControlEvents { get }
 }
 
 public class LogReader: NSObject {
@@ -42,6 +26,8 @@ public class LogReader: NSObject {
     private let controller = LoggerRootViewController()
     
     public static let share = LogReader()
+    
+    var isShowAllWindow: Bool = false
     
     var filePath: String?
     

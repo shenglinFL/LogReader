@@ -36,10 +36,10 @@ class LoggerRootViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        self.title = "LOG"
         self.view.backgroundColor = .clear
         
-        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateText), userInfo: nil, repeats: true)
+//        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateText), userInfo: nil, repeats: true)
     }
     
     override func viewDidLayoutSubviews() {
@@ -50,6 +50,8 @@ class LoggerRootViewController: UIViewController {
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panDidFire(panner:)))
         self.button.addGestureRecognizer(panGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
+        self.button.addGestureRecognizer(tapGesture)
     }
     
     @objc private func updateText() {
@@ -61,6 +63,15 @@ class LoggerRootViewController: UIViewController {
             }
         } catch  {
             
+        }
+    }
+    
+    @objc func tap() {
+        if let pvc = self.presentedViewController {
+            pvc.dismiss(animated: true, completion: nil)
+        }else {
+            let nav = UINavigationController(rootViewController: LogReaderViewController())
+            self.present(nav, animated: true, completion: nil)
         }
     }
     

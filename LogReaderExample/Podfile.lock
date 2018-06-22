@@ -1,15 +1,24 @@
 PODS:
-  - LogReader (0.1.0)
+  - CocoaLumberjack/Default (3.4.2)
+  - CocoaLumberjack/Swift (3.4.2):
+    - CocoaLumberjack/Default
+  - LogReader (0.1.0):
+    - CocoaLumberjack/Swift
 
 DEPENDENCIES:
   - LogReader (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - CocoaLumberjack
 
 EXTERNAL SOURCES:
   LogReader:
     :path: "../"
 
 SPEC CHECKSUMS:
-  LogReader: d1d8797e0a49dc62d5890ae3725f26ad4ebe55d1
+  CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
+  LogReader: fcabb84a0ef34fdb3994d33afabae7bc045f07ee
 
 PODFILE CHECKSUM: 0bdbbc15fd0faa3dff36c4eb468e9fd52e995344
 

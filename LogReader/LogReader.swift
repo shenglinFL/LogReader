@@ -15,6 +15,8 @@ public class LogReader: NSObject {
     
     public static let share = LogReader()
     
+    var logText: String = ""
+    
     public func enable() {
         self.window.rootViewController = self.controller
         self.window.makeKeyAndVisible()
@@ -24,5 +26,11 @@ public class LogReader: NSObject {
         self.window.rootViewController = nil
         self.window.resignKey()
         self.window.removeFromSuperview()
+    }
+    
+    public func set(filePath: String) {
+        if let logs = NSArray(contentsOfFile: filePath) {
+            self.logText = logs.componentsJoined(by: "\n")
+        }
     }
 }

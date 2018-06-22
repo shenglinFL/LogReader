@@ -17,6 +17,17 @@ class LoggerRootViewController: UIViewController {
         return btn
     }()
     
+    private let textView: UITextView = {
+        let textView = UITextView()
+        textView.font = UIFont.systemFont(ofSize: 13)
+        textView.backgroundColor = UIColor.clear
+        textView.scrollsToTop = false
+        textView.textColor = UIColor.gray
+        textView.text = "Log......"
+        textView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 200)
+        return textView
+    }()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +40,7 @@ class LoggerRootViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.view.addSubview(self.button)
+        self.view.addSubview(self.textView)
     }
 
     override func didReceiveMemoryWarning() {

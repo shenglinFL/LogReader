@@ -23,13 +23,23 @@ class LogReaderViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.title = "LOG"
         self.createTableView()
-        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-            self.getData()
-        }
         self.getData()
         
         let leftButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(close))
         self.navigationItem.leftBarButtonItem = leftButton
+        
+        polling()
+    }
+    
+    /// 定时刷新
+    private func polling() {
+        let timer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main) // FIXME: DispatchSourceTimer释放？
+        timer.schedule(wallDeadline: .now(), repeating: 1)
+        timer.setEventHandler {
+            self.getData()
+        }
+        
+        timer.resume()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -58,7 +68,8 @@ class LogReaderViewController: UIViewController {
         do {
             if let filePath = LogReader.share.filePath {
                 let text = try String.init(contentsOfFile: filePath, encoding: .utf8)
-                self.data = text.split(separator: "\n")
+                let datas = text.split(separator: "\n")
+                self.data = datas.reversed()
             }
         } catch  {
             
@@ -84,6 +95,7 @@ extension LogReaderViewController: UITableViewDataSource {
             cell = LogReaderTableViewCell(style: .default, reuseIdentifier: "LogReaderViewController")
         }
         cell!.textLabel?.text = String(self.data[indexPath.row])
+        cell!.textLabel?.numberOfLines = 0
         return cell!
     }
     

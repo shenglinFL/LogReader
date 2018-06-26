@@ -31,18 +31,33 @@ public class LogReader: NSObject {
     
     var filePath: String?
     
-    public func enable() {
-        self.window.rootViewController = self.controller
-        self.window.makeKeyAndVisible()
-        
-        UIViewController.viewDidAppearHackSwizzle()
+    public var enable: Bool = false {
+        didSet{
+            if enable {
+                self.window.rootViewController = self.controller
+                self.window.makeKeyAndVisible()
+                
+                UIViewController.viewDidAppearHackSwizzle()
+            }else {
+                self.window.rootViewController = nil
+                self.window.resignKey()
+                self.window.removeFromSuperview()
+            }
+        }
     }
     
-    public func disable() {
-        self.window.rootViewController = nil
-        self.window.resignKey()
-        self.window.removeFromSuperview()
-    }
+    //    func enable() {
+    //        self.window.rootViewController = self.controller
+    //        self.window.makeKeyAndVisible()
+    //        
+    //        UIViewController.viewDidAppearHackSwizzle()
+    //    }
+    //    
+    //    func disable() {
+    //        self.window.rootViewController = nil
+    //        self.window.resignKey()
+    //        self.window.removeFromSuperview()
+    //    }
     
     public func set(filePath: String) {
         self.filePath = filePath
@@ -68,7 +83,7 @@ extension UIViewController {
             viewDidAppearHackHandle()
         }
         if let nav = self.navigationController {
-            var path = ""
+            var path: String = "PATH: "
             for vc in nav.viewControllers {
                 let title: String = vc.title != nil ? vc.title! : "UNKNOWN"
                 path = path + "/" + title

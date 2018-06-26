@@ -10,27 +10,6 @@ import UIKit
 class LoggerRootViewController: UIViewController {
     
     private let button = LoggerSuspendedButton()
-    
-//    private let button: UIButton = {
-//        let btn = UIButton(type: UIButtonType.system)
-//        btn.setTitle("LOG", for: .normal)
-//        btn.setTitleColor(UIColor.red, for: .normal)
-//        btn.frame = CGRect(x: 20, y: 300, width: 100, height: 50)
-//        return btn
-//    }()
-    
-    private let textView: UITextView = {
-        let textView = UITextView()
-        textView.font = UIFont.systemFont(ofSize: 13)
-        textView.backgroundColor = UIColor.clear
-        textView.scrollsToTop = false
-        textView.textColor = UIColor.gray
-        textView.text = "Log......"
-        textView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 200)
-        textView.layoutManager.allowsNonContiguousLayout = false // 关闭非连续布局
-        return textView
-    }()
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,14 +17,12 @@ class LoggerRootViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.title = "LOG"
         self.view.backgroundColor = .clear
-        
-//        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateText), userInfo: nil, repeats: true)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        self.view.addSubview(self.textView)
+
         self.view.addSubview(self.button)
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panDidFire(panner:)))
@@ -53,19 +30,7 @@ class LoggerRootViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap))
         self.button.addGestureRecognizer(tapGesture)
     }
-    
-    @objc private func updateText() {
-        do {
-            if let filePath = LogReader.share.filePath {
-                let text = try String.init(contentsOfFile: filePath, encoding: .utf8)
-                self.textView.text = text
-                self.textView.setContentOffset(CGPoint(x: 0, y: self.textView.contentSize.height - self.textView.bounds.size.height), animated: true)
-            }
-        } catch  {
-            
-        }
-    }
-    
+
     @objc func tap() {
         if let pvc = self.presentedViewController {
             pvc.dismiss(animated: true, completion: nil)

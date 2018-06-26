@@ -17,6 +17,14 @@ class LoggerSuspendedButton: UIView {
     }
     */
     
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "LOG"
+        label.textColor = UIColor.brown
+        label.textAlignment = .center
+        return label
+    }()
+    
     static var originalPosition: CGPoint {
         return CGPoint(x: -10, y: UIScreen.main.bounds.size.height / 2)
     }
@@ -26,6 +34,7 @@ class LoggerSuspendedButton: UIView {
         super.init(frame: CGRect(origin: LoggerSuspendedButton.originalPosition, size: LoggerSuspendedButton.size))
         
         backgroundColor = UIColor.red
+        self.alpha = 0.5
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowRadius = 5
         layer.shadowOpacity = 0.8
@@ -34,6 +43,15 @@ class LoggerSuspendedButton: UIView {
         sizeToFit()
         layer.masksToBounds = true
         
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        titleLabel.frame = self.bounds
+//        titleLabel.center = self.center
+        
+        self.addSubview(titleLabel)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -17,13 +17,13 @@ class LogReaderViewController: UIViewController {
         }
     }
 
+    var timer: Timer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.title = "LOG"
-        self.createTableView()
-        self.getData()
         
         let leftButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(close))
         self.navigationItem.leftBarButtonItem = leftButton
@@ -31,15 +31,22 @@ class LogReaderViewController: UIViewController {
         polling()
     }
     
+    override func viewDidLayoutSubviews() {
+        self.createTableView()
+        self.getData()
+    }
+    
     /// 定时刷新
     private func polling() {
-        let timer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main) // FIXME: DispatchSourceTimer释放？
-        timer.schedule(wallDeadline: .now(), repeating: 1)
-        timer.setEventHandler {
-            self.getData()
+        // FIXME: Timer释放？
+        if #available(iOS 10.0, *) {
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] (timer ) in
+                guard let strongSelf = self else { return }
+                strongSelf.getData()
+            })
+        } else {
+            // Fallback on earlier versions
         }
-        
-        timer.resume()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,12 +71,11 @@ class LogReaderViewController: UIViewController {
         self.tableView.register(LogReaderTableViewCell.self, forCellReuseIdentifier: "LogReaderTableViewCell")
     }
     
-    private func getData() {
+    @objc private func getData() {
         do {
             if let filePath = LogReader.share.filePath {
                 let text = try String.init(contentsOfFile: filePath, encoding: .utf8)
-                let datas = text.split(separator: "\n")
-                self.data = datas.reversed()
+                self.data  = text.split(separator: "\n")
             }
         } catch  {
             

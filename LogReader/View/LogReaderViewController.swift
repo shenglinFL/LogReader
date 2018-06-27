@@ -14,6 +14,9 @@ class LogReaderViewController: UIViewController {
     var data: [Substring] = [] {
         didSet {
             self.tableView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentSize.height - self.tableView.bounds.height), animated: false)
+            }
         }
     }
 
